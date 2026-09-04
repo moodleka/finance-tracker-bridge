@@ -2,13 +2,46 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Redirecting…</title>
   <meta name="robots" content="noindex">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+    a.button {
+      margin-top: 24px;
+      display: inline-block;
+      padding: 14px 28px;
+      background: #000;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
   <p>Redirecting back to Finance Tracker…</p>
+  <a id="fallback" class="button" href="#">Open Finance Tracker</a>
+
   <script>
-    window.location.replace("financetracker://enablebanking-callback" + window.location.search);
+    var target = "financetracker://enablebanking-callback" + window.location.search;
+    document.getElementById("fallback").href = target;
+
+    // Try a couple of ways to trigger the custom-scheme redirect automatically —
+    // embedded browsers are inconsistent about catching this on the first attempt.
+    window.location.href = target;
+    setTimeout(function () { window.location.replace(target); }, 250);
   </script>
 </body>
 </html>
